@@ -1,4 +1,4 @@
-# MobilepayAlerts
+# MobilePayAlerts
 
 #### Requirements:
 Required modules:
