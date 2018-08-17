@@ -7,9 +7,8 @@ Required modules:
 * asyncio
 * websockets
 * pathlib
-* qrcode
 
-All can be installed like this: `pip install requests wxPython asyncio websockets pathlib qrcode`  
+All can be installed like this: `pip install requests wxPython asyncio websockets pathlib`  
 Or you can install one at a time if you prefer that.
 
 #### Information:
