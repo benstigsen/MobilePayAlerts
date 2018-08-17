@@ -64,17 +64,14 @@ class TabOne(wx.Panel):
 class TabTwo(wx.Panel):
 	def __init__(self, parent):
 		wx.Panel.__init__(self, parent)
-		self.generateButton = wx.Button(self, label="Generate QR code")
 		self.resetButton = wx.Button(self, label="Reset")
 
-		self.Bind(wx.EVT_BUTTON, self.buttonPress, self.generateButton)
 		self.Bind(wx.EVT_BUTTON, self.buttonPress, self.resetButton)
 
 		# Layout
 		v_sizer = wx.BoxSizer(wx.VERTICAL)
 		h_sizer = wx.BoxSizer(wx.HORIZONTAL)
 
-		v_sizer.Add(self.generateButton, 0, wx.TOP | wx.BOTTOM | wx.EXPAND, 1)
 		v_sizer.Add(self.resetButton, 0, wx.TOP | wx.BOTTOM | wx.EXPAND, 1)
 
 		self.SetSizer(v_sizer)
@@ -97,29 +94,6 @@ class TabTwo(wx.Panel):
 
 				except Exception as error:
 					logger.error("[Reset] button returned \"{0}\"".format(error))
-
-		elif btn == "Generate QR code":
-			number = wx.TextEntryDialog(self, "Phone number:", "Phone number")
-			number.SetValue("12345678")
-
-			if number.ShowModal() == wx.ID_OK:
-				number = number.GetValue()
-				number = number.replace(" ", "")
-				number = number.replace("+45","")
-				with wx.FileDialog(self, "Save QR code image as:", wildcard="PNG (*.png)|*.png|JPEG (*.jpg)|*.jpg", style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT) as fileDialog:
-					fileDialog.SetFilename("QRCode")
-					if fileDialog.ShowModal() == wx.ID_CANCEL:
-						return
-					path = fileDialog.GetPath()
-				try:
-					img = qrcode.make("https://www.mobilepay.dk/erhverv/betalingslink/betalingslink-svar?phone={0}".format(number))
-					img.save(path)
-				except:
-					import qrcode
-					img = qrcode.make("https://www.mobilepay.dk/erhverv/betalingslink/betalingslink-svar?phone={0}".format(number))
-					img.save(path)
-				del number
-
 
 # --- TAB THREE --- #
 class TabThree(wx.Panel):
