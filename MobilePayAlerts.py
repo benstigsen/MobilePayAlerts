@@ -213,8 +213,8 @@ class OtherWidget(QtWidgets.QWidget): # Other
     def setup(self):
         log.info("Starting setup")
         setup_server = subprocess.Popen(["python", "setup_handler.py"] + [
-        	"<APPLICATION_SECRET>", # Streamlabs Secret
-        	"APPLICATION_SECRET"])	# Pushbullet Secret
+            "<APPLICATION_SECRET>",  # Streamlabs Secret
+        	"<APPLICATION_SECRET>"]) # Pushbullet Secret
 
         log.info("Starting setup - step 1")
         setup_1 = CreateGUI.messagebox(self, "Setup [1/3]", lang["msgbox_setup_1"]) # Pushbullet
