@@ -12,7 +12,7 @@ Required modules:
 All of the required modules can be installed like this: `pip install PyQt5 requests asyncio psutil websockets`  
 Or you can install one at a time if you prefer that.
 
-**To make this work with your own application, you need to replace \<CLIENT ID\> and <APPLICATION_ID> on line [215](https://github.com/BenTearzz/MobilePayAlerts/blob/a00be77e901fa834fe7ff3da32fc557193335d91/MobilePayAlerts.py#L215), line [222](https://github.com/BenTearzz/MobilePayAlerts/blob/a00be77e901fa834fe7ff3da32fc557193335d91/MobilePayAlerts.py#L222) and line [227](https://github.com/BenTearzz/MobilePayAlerts/blob/a00be77e901fa834fe7ff3da32fc557193335d91/MobilePayAlerts.py#L227) in MobilePayAlerts.py**
+**To make this work with your own application, you need to replace \<CLIENT ID\> and <APPLICATION_ID> on line 215, line 222 and line 227 in MobilePayAlerts.py. Aswell as line 49 and 73 in setup_handler.py**
 
 ----
 
