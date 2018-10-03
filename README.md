@@ -52,3 +52,7 @@ Imported in "MobilePayAlerts.py" to set interface language.
 
 **logger.py**  
 Imported in "MobilePayAlerts.py" "main_handler.py", "setup_handler.py", "payments_handler.py" and "data_handler.py". Allows for easy creation and binding to output log file. 
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FBenTearzz%2FMobilePayAlerts.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FBenTearzz%2FMobilePayAlerts?ref=badge_large)
