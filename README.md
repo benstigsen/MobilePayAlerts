@@ -18,7 +18,7 @@ Or you can install one at a time if you prefer that.
 
 ### Information:
 The graphical user interface (GUI) is written in PyQt5.   
-You see the progress and follow the development here on GitHub or on the roadmap here: [Trello Roadmap](https://trello.com/b/j8OdYQ3O)   
+You can see the progress and follow the development here on GitHub or on the roadmap here: [Trello Roadmap](https://trello.com/b/j8OdYQ3O)   
 
 **MobilePayAlerts.py**  
 `from PyQt5 import QtCore, QtGui, QtWidgets` GUI framework.  
