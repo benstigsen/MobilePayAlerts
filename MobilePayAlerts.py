@@ -101,8 +101,7 @@ class GeneralWidget(QtWidgets.QWidget): # General
             self.btn_start.setEnabled(False)
             self.btn_stop.setEnabled(True)
             log.info("Starting payments_handler.py")
-            #self.payments = subprocess.Popen("payments_handler.py", shell=True)
-            self.payments = subprocess.Popen("payments_handler.exe")
+            self.payments = subprocess.Popen("payments_handler.py", shell=True)
 
         elif button == lang["btn_stop"]: # Stop Button
             self.btn_stop.setEnabled(False)
