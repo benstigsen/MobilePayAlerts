@@ -1,0 +1,166 @@
+{
+	"danish":{
+
+		"tab_1":{"text":"Generelt"},
+		"tab_2":{"text":"Indstillinger"},
+	
+		"label_settings":{
+			"text":"Donations Indstillinger"
+		},
+	
+		"label_other_settings":{
+			"text":"Andre Indstillinger"
+		},
+	
+		"label_name":{
+			"text":"Standard navn:"
+		},
+	
+		"label_msg":{
+			"text":"Standard besked:"
+		},
+
+		"input_name":{
+			"key":"_INPUT_NAME_",
+			"tt":"Navnet som der bliver vist hvis navnet fra senderen ikke kan findes"
+		},
+	
+		"input_msg":{
+			"key":"_INPUT_MSG_",
+			"tt":"Teksten som bliver vist hvis senderen ikke sendte nogen besked med"
+		},
+
+		"btn_start":{
+			"text":"Start",
+			"key":"_BTN_START_",
+			"tt":"Begynd at modtage donationer fra MobilePay"
+		},
+	
+		"btn_stop":{
+			"text":"Stop",
+			"key":"_BTN_STOP_",
+			"tt":"Stop med at modtage donationer fra MobilePay"
+		},
+	
+		"btn_test":{
+			"text":"Test",
+			"key":"_BTN_TEST_",
+			"tt":"Send en test donation til Streamlabs"
+		},
+	
+		"btn_save":{
+			"text":"Gem Indstillinger",
+			"key":"_BTN_SAVE_",
+			"tt":"Gem de nuværende indstillinger"
+		},
+
+		"btn_reset":{
+			"text":"Gendan",
+			"key":"_BTN_RESET_",
+			"tt":"Gendan alle indstillinger i MobilePayAlerts"
+		},
+	
+		"btn_setup":{
+			"text":"Setup",
+			"key":"_BTN_SETUP_",
+			"tt":"Start opsætning for at modtage nye tokens til Streamlabs og Pushbullet"
+		},
+
+		"btn_generate":{
+			"text":"Generer en QR kode",
+			"key":"_BTN_GENQR_",
+			"tt":"Generer en QR kode"
+		},
+
+		"pop_setup":{"text":"Tryk OK for at starte førstegangs opsætning"}
+	},
+
+	"english":{
+
+		"tab_1":{"text":"General"},
+		"tab_2":{"text":"Settings"},
+
+		"label_settings":{
+			"text":"Donation Settings"
+		},
+	
+		"label_other_settings":{
+			"text":"Other settings"
+		},
+	
+		"label_name":{
+			"text":"Default name:"
+		},
+	
+		"label_msg":{
+			"text":"Default message:"
+		},
+
+		"input_name":{
+			"key":"_INPUT_NAME_",
+			"tt":"The name that's going to be shown if no name was received from the sender"
+		},
+	
+		"input_msg":{
+			"key":"_INPUT_MSG_",
+			"tt":"The text that's going to be shown if no message was received from the sender"
+		},
+
+		"btn_start":{
+			"text":"Start",
+			"key":"_BTN_START_",
+			"tt":"Start receiving donations from MobilePay"
+		},
+	
+		"btn_stop":{
+			"text":"Stop",
+			"key":"_BTN_STOP_",
+			"tt":"Stop receiving donations from MobilePay"
+		},
+	
+		"btn_test":{
+			"text":"Test",
+			"key":"_BTN_TEST_",
+			"tt":"Send a test donation to Streamlabs"
+		},
+
+		"btn_save":{
+			"text":"Save Settings",
+			"key":"_BTN_SAVE_",
+			"tt":"Save the current settings"
+		},
+	
+		"btn_reset":{
+			"text":"Reset",
+			"key":"_BTN_RESET_",
+			"tt":"Reset all settings in MobilePayAlerts"
+		},
+	
+		"btn_setup":{
+			"text":"Setup",
+			"key":"_BTN_SETUP_",
+			"tt":"Start setup to get new access token for Streamlabs and Pushbullet"
+		},
+
+		"btn_generate":{
+			"text":"Generate QR code",
+			"key":"_BTN_GENQR_",
+			"tt":"Generate a QR code"
+		},
+
+		"pop_setup":{"text":"Press OK to start first-time setup"}
+	},
+
+	"common":{
+
+		"languages":["Danish","English"],
+
+		"combobox":{
+			"key":"_COMBO_LANG_"
+		},
+
+		"label_lang":{
+			"text":"Sprog/Language:"
+		}
+	}
+}

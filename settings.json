@@ -1,0 +1,10 @@
+{
+    "language": "danish",
+    "default_msg": "",
+    "default_name": "Anon",
+    "pb_token": "",
+    "sl_token": "",
+    "redirect_uri": "http://localhost:1337",
+    "redirect_uri_short": "localhost",
+    "port": 1337
+}
