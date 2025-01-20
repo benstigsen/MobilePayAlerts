@@ -49,7 +49,7 @@ def button(name):
             logger.info("Setup done!")
         case "_BTN_RESET_":
             logger.info("Resetting config!")
-            configurator.save("settings.json", configurator.default("settings.json"))
+            configurator.save("settings.json", configurator.default())
             widget_by_name(2, "_BTN_RESET_").invoke()
 
 def main():

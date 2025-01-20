@@ -6,7 +6,7 @@ logger = logging.getLogger("main")
 
 def initialize():
     if not isfile("settings.json"):
-        save("settings.json", default("settings.json"))
+        save("settings.json", default())
 
 def save(cfg_file, settings):
     settings = json.dumps(settings, indent=4)
@@ -24,23 +24,15 @@ def load(cfg_file):
 
     return settings
 
-def default(cfg_file):
-    settings = {}
-    if cfg_file == "settings.json":
-        settings = {
-            "language": "danish",
+def default():
+    return {
+        "default_msg":  "",
+        "default_name": "Anon",
 
-            "default_msg":  "",
-            "default_name": "Anon",
+        "pb_token": "",
+        "sl_token": "",
 
-            "pb_token": "",
-            "sl_token": "",
-
-            "redirect_uri":       "http://localhost:1337",
-            "redirect_uri_short": "localhost",
-            "port":               1337
-        }
-    else:
-        logger.debug("Unknown file")
-
-    return settings
+        "redirect_uri":       "http://localhost:1337",
+        "redirect_uri_short": "localhost",
+        "port":               1337
+    }
