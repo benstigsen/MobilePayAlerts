@@ -64,10 +64,8 @@ def runServer():
         logger.info("Stopped the local HTTP server")
         return
 
-
 class StopServer(KeyboardInterrupt):
     pass
-
 
 # (Handling data / Retrieving tokens) #
 class AuthHandler:

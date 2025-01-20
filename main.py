@@ -18,8 +18,6 @@ class GUI:
     def __init__(self):
         self.WINDOW_TITLE = "MobilePayAlerts"
 
-        self.event_combiner = {}
-
         tab_1 = sg.Tab(
             "General",
             [
@@ -116,9 +114,6 @@ class GUI:
 
             elif event == "_BTN_RESET_":
                 Main().resetConfig()
-
-            elif event in self.event_combiner:
-                self.event_combiner[event]()
 
             print(event, values)
 
