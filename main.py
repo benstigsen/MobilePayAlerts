@@ -98,7 +98,7 @@ def main():
 
         ttk.Separator(tab2),
         ttk.Label(tab2, text="Default Message:", font=font_label),
-        ttk.Entry(tab2, name="_INPUT_MESSAGE_"),
+        ttk.Entry(tab2, name="_INPUT_MSG_"),
 
         ttk.Separator(tab2),
         ttk.Button(tab2, text="Save Settings", name="_BTN_SAVE_", command=callback("_BTN_SAVE_")),
@@ -108,6 +108,9 @@ def main():
         ttk.Button(tab2, text="Reset", name="_BTN_RESET_", command=callback("_BTN_RESET_")),
         ttk.Button(tab2, text="Setup", name="_BTN_SETUP_", command=callback("_BTN_SETUP_")),
     ]
+
+    widget_by_name(2, "_INPUT_NAME_").insert(0, cfg["default_name"])
+    widget_by_name(2, "_INPUT_MSG_").insert(0, cfg["default_msg"])
 
     for widget in widgets:
         if isinstance(widget, ttk.Separator):
