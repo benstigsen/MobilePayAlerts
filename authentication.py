@@ -7,7 +7,6 @@ import configurator
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from re import search as regex
 
-
 logger = logging.getLogger("main")
 cfg = configurator.load("settings.json")
 
@@ -25,8 +24,7 @@ class LocalServer(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(html.encode())
 
-        AuthHandler().handleData(data)
-
+        AuthHandler().handle_data(data)
 
 # (Pushbullet / Streamlabs credentials (id, secret)) #
 def client(service):
@@ -43,9 +41,8 @@ def client(service):
 
     return credentials[service]
 
-
 # (Starting local server / Stopping local server) #
-def runServer():
+def run_server():
     logger.info("Starting server")
 
     logger.info("Opening Pushbullet and Streamlabs in the webbrowser")
@@ -70,7 +67,7 @@ class StopServer(KeyboardInterrupt):
 # (Handling data / Retrieving tokens) #
 class AuthHandler:
     # Handle data
-    def handleData(self, data):
+    def handle_data(self, data):
         print(data)
 
         match = regex(r"=([0-9a-zA-Z\.]+)(&|\s)", data)
@@ -88,10 +85,10 @@ class AuthHandler:
             service = "pb"
 
         logger.info("Received temporary code!")
-        self.retrieveToken(code, url, service)
+        self.retrieve_token(code, url, service)
 
     # Retrieve tokens
-    def retrieveToken(self, code, url, service):
+    def retrieve_token(self, code, url, service):
         data = {
             "grant_type": "authorization_code",
             "client_id": client(service)["id"],

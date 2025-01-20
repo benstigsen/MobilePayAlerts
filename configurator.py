@@ -4,12 +4,9 @@ from os.path import isfile
 
 logger = logging.getLogger("main")
 
-def initialize()
+def initialize():
     if not isfile("settings.json"):
         save("settings.json", default("settings.json"))
-
-    if not isfile("language.json"):
-        save("language.json", {})
 
 def save(cfg_file, settings):
     settings = json.dumps(settings, indent=4)

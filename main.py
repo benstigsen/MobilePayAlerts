@@ -1,149 +1,121 @@
-import PySimpleGUIQt as sg
-
-import subprocess
-import log
-
-import authentication
+import tkinter as tk
+from tkinter import ttk
+import alerts
+import asyncio
 import configurator
+import authentication
+import log
 
 logger = log.initialize()
 
 configurator.initialize()
 cfg = configurator.load("settings.json")
-lang = configurator.load("language.json")
-text = configurator.load("language.json")[cfg["language"].lower()]
 
+root = tk.Tk()
+def callback(name):
+    return lambda: button(name)
 
-class GUI:
-    def __init__(self):
-        self.WINDOW_TITLE = "MobilePayAlerts"
+def widget_by_name(tab, name):
+    return root.nametowidget(f"_MAIN_._TAB{tab}_.{name}")
 
-        tab_1 = sg.Tab(
-            "General",
-            [
-                [sg.HorizontalSeparator()],
-                [sg.Button("Start", key="_BTN_START_", size = (250, 40), visible = True)],
-                [sg.HorizontalSeparator()],
-                [sg.Button("Stop", key="_BTN_STOP_", size = (250, 40), visible = False)],
-                [sg.HorizontalSeparator()],
-                [sg.Button("Test", key="_BTN_TEST_", size = (250, 40), visible = True)],
-                [sg.HorizontalSeparator()],
-            ],
-        )
+def enable(tab, name):
+    widget_by_name(tab, name)["state"] = "normal"
 
-        tab_2 = sg.Tab(
-            "Settings",
-            [
-                [sg.Text("Donation Settings", font = ("def", "def", "bold"))],
-                [
-                    sg.Text("Default name:", size = (11, 0.6)),
-                    sg.InputText(
-                        default_text = cfg["default_name"],
-                        key = "_INPUT_NAME_",
-                        do_not_clear = True,
-                        tooltip = "The name that's going to be shown if no name was received from the sender",
-                    ),
-                ],
-                [
-                    sg.Text("Default message:", size = (11, 0.6)),
-                    sg.InputText(
-                        default_text = cfg["default_msg"],
-                        key = "_INPUT_MSG_",
-                        do_not_clear = True,
-                        tooltip = "The text that's going to be shown if no message was received from the sender",
-                    ),
-                ],
-                [
-                    sg.Button(
-                        "Save Settings",
-                        key = "_BTN_SAVE_",
-                        tooltip = "Save the current settings",
-                    )
-                ],
-                [sg.HorizontalSeparator()],
-                [
-                    sg.Text(
-                        "Other settings",
-                        font = ("def", "def", "bold"),
-                    )
-                ],
-                [
-                    sg.Button("Reset", key = "_BTN_RESET_"),
-                    sg.Button("Setup", key = "_BTN_SETUP_"),
-                ],
-            ],
-        )
+def disable(tab, name):
+    widget_by_name(tab, name)["state"] = "disable"
 
-        self.layout = [[sg.TabGroup([[tab_1, tab_2]])]]
+def button(name):
+    match name:
+        case "_BTN_START_":
+            disable(1, name)
+            asyncio.run(alerts.start_receiving())
+            enable(1, "_BTN_STOP_")
+        case "_BTN_STOP_":
+            disable(1, name)
+            for task in asyncio.all_tasks():
+                task.cancel()
+            enable(1, "_BTN_START_")
+        case "_BTN_TEST_":
+            disable(1, name)
+            asyncio.run(alerts.test_alert())
+            enable(1, name)
+        case "_BTN_SAVE_":
+            cfg["default_name"] = widget_by_name(2, "_INPUT_NAME_").get()
+            cfg["default_msg"] = widget_by_name(2, "_INPUT_MSG_").get()
+            configurator.save("settings.json", cfg)
+        case "_BTN_SETUP_":
+            logger.info("Starting setup!")
+            authentication.run_server()
+            logger.info("Setup done!")
+        case "_BTN_RESET_":
+            logger.info("Resetting config!")
+            configurator.save("settings.json", configurator.default("settings.json"))
+            widget_by_name(2, "_BTN_RESET_").invoke()
 
-    def main(self):
-        window = sg.Window(self.WINDOW_TITLE, size = (250, 250)).Layout(self.layout)
+def main():
+    # Setting some window properties
+    root.title("MobilePayAlerts")
+    root.configure(padx=6, pady=6)
+    root.minsize(200, 200)
+    root.maxsize(500, 500)
+    root.geometry("300x300+3200+400")
 
-        print(window)
+    tabs = ttk.Notebook(root, name="_MAIN_")
+    tab1 = ttk.Frame(tabs, name="_TAB1_")
+    tab2 = ttk.Frame(tabs, name="_TAB2_")
 
-        while True:
-            event, values = window.Read()
-            if event is None or event == "Exit":
-                break
+    tabs.add(tab1, text="General")
+    tabs.add(tab2, text="Settings")
+    tabs.pack(expand=True, fill="both")
 
-            # Main Tab
-            if event == "_BTN_START_":
-                window.FindElement(event).Update(visible=False)
-                # self.receive_alerts = subprocess.Popen(["alerts.exe", "startReceiving"])
-                self.receive_alerts = subprocess.Popen(
-                    ["python", "alerts.py", "startReceiving"]
-                )
-                window.FindElement("_BTN_STOP_").Update(visible=True)
+    font_title = ("Arial", 18, "bold")
+    font_label = ("Arial", 12, "bold")
 
-            elif event == "_BTN_STOP_":
-                window.FindElement(event).Update(visible=False)
-                self.receive_alerts.kill()
-                window.FindElement("_BTN_START_").Update(visible=True)
+    widgets = [
+        # Tab 1
+        ttk.Separator(tab1),
+        ttk.Label(tab1, text="General", font=font_title),
+        ttk.Separator(tab1),
 
-            elif event == "_BTN_TEST_":
-                window.FindElement(event).Update(visible=False)
-                result = subprocess.run(["alerts.exe", "testAlert"])
-                window.FindElement(event).Update(visible=True)
+        ttk.Button(tab1, text="Start", name="_BTN_START_", command=callback("_BTN_START_")),
+        ttk.Separator(tab1),
+        ttk.Button(tab1, text="Stop", name="_BTN_STOP_", command=callback("_BTN_STOP_")),
+        ttk.Separator(tab1),
+        ttk.Button(tab1, text="Test", name="_BTN_TEST_", command=callback("_BTN_TEST_")),
 
-            # Settings Tab
-            elif event == "_BTN_SAVE_":
-                self.save(values)
+        ttk.Separator(tab1),
+        ttk.Separator(tab1),
+        ttk.Label(tab1, text="MobilePayAlerts", font=font_label),
+        ttk.Label(tab1, text="Created by Benjamin Stigsen"),
 
-            elif event == "_BTN_SETUP_":
-                Main().setup()
+        # Tab 2
+        ttk.Separator(tab1),
+        ttk.Label(tab2, text="Donation Settings", font=font_title),
 
-            elif event == "_BTN_RESET_":
-                Main().resetConfig()
+        ttk.Separator(tab2),
+        ttk.Label(tab2, text="Default Name:", font=font_label),
+        ttk.Entry(tab2, name="_INPUT_NAME_"),
 
-            print(event, values)
+        ttk.Separator(tab2),
+        ttk.Label(tab2, text="Default Message:", font=font_label),
+        ttk.Entry(tab2, name="_INPUT_MESSAGE_"),
 
-        window.Close()
+        ttk.Separator(tab2),
+        ttk.Button(tab2, text="Save Settings", name="_BTN_SAVE_", command=callback("_BTN_SAVE_")),
+        ttk.Separator(tab2),
 
-    def save(self, values):
-        cfg["default_name"] = values["_INPUT_NAME_"]
-        cfg["default_msg"] = values["_INPUT_MSG_"]
-        configurator.save("settings.json", cfg)
+        ttk.Label(tab2, text="Other Settings", font=font_label),
+        ttk.Button(tab2, text="Reset", name="_BTN_RESET_", command=callback("_BTN_RESET_")),
+        ttk.Button(tab2, text="Setup", name="_BTN_SETUP_", command=callback("_BTN_SETUP_")),
+    ]
 
-class Main:
-    def __init__(self):
-        logger.info("\n")
-        logger.info("Checking for Pushbullet and Streamlabs token")
+    for widget in widgets:
+        if isinstance(widget, ttk.Separator):
+            widget.pack(pady=5)
+        else:
+            widget.pack()
 
-        if cfg["pb_token"] == "" or cfg["sl_token"] == "":
-            sg.PopupOK("Setup", "Setup is required")
-            self.setup()
+    root.mainloop()
 
-        logger.info("Pushbullet and Streamlabs tokens exist!")
-
-        GUI().main()
-
-    def setup(self):
-        logger.info("Starting setup!")
-        authentication.runServer()
-        logger.info("Setup done!")
-
-    def resetConfig(self):
-        logger.info("Resetting config!")
-        configurator.save("settings.json", configurator.default("settings.json"))
-
-Main()
+if __name__ == "__main__":
+    main()
