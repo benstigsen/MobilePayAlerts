@@ -13,8 +13,6 @@ cfg = configurator.load("settings.json")
 lang = configurator.load("language.json")
 text = configurator.load("language.json")[cfg["language"].lower()]
 
-for key, value in lang["common"].items():
-    text[key] = value
 
 class GUI:
     def __init__(self):
@@ -23,7 +21,7 @@ class GUI:
         self.event_combiner = {}
 
         tab_1 = sg.Tab(
-            text["tab_1"]["text"],
+            "General",
             [
                 [sg.HorizontalSeparator()],
                 [sg.Button("Start", key="_BTN_START_", size = (250, 40), visible = True)],
@@ -36,60 +34,44 @@ class GUI:
         )
 
         tab_2 = sg.Tab(
-            text["tab_2"]["text"],
+            "Settings",
             [
-                [sg.Text(text["label_settings"]["text"], font = ("def", "def", "bold"))],
+                [sg.Text("Donation Settings", font = ("def", "def", "bold"))],
                 [
-                    sg.Text(text["label_name"]["text"], size = (11, 0.6)),
+                    sg.Text("Default name:", size = (11, 0.6)),
                     sg.InputText(
                         default_text = cfg["default_name"],
-                        key = text["input_name"]["key"],
+                        key = "_INPUT_NAME_",
                         do_not_clear = True,
-                        tooltip = text["input_name"]["tt"],
+                        tooltip = "The name that's going to be shown if no name was received from the sender",
                     ),
                 ],
                 [
-                    sg.Text(text["label_msg"]["text"], size = (11, 0.6)),
+                    sg.Text("Default message:", size = (11, 0.6)),
                     sg.InputText(
                         default_text = cfg["default_msg"],
-                        key = text["input_msg"]["key"],
+                        key = "_INPUT_MSG_",
                         do_not_clear = True,
-                        tooltip = text["input_msg"]["tt"],
-                    ),
-                ],
-                [
-                    sg.Text(text["label_lang"]["text"], size = (11, 0.6)),
-                    sg.InputCombo(
-                        text["languages"],
-                        key = text["combobox"]["key"],
-                        default_value = cfg["language"].capitalize(),
+                        tooltip = "The text that's going to be shown if no message was received from the sender",
                     ),
                 ],
                 [
                     sg.Button(
-                        text["btn_save"]["text"],
-                        key = text["btn_save"]["key"],
-                        tooltip = text["btn_save"]["tt"],
-                    )
-                ],
-                [sg.HorizontalSeparator()],
-                [
-                    sg.Button(
-                        text["btn_generate"]["text"],
-                        key = text["btn_generate"]["key"],
-                        tooltip = text["btn_generate"]["tt"],
+                        "Save Settings",
+                        key = "_BTN_SAVE_",
+                        tooltip = "Save the current settings",
                     )
                 ],
                 [sg.HorizontalSeparator()],
                 [
                     sg.Text(
-                        text["label_other_settings"]["text"],
+                        "Other settings",
                         font = ("def", "def", "bold"),
                     )
                 ],
                 [
-                    sg.Button(text["btn_reset"]["text"], key = text["btn_reset"]["key"]),
-                    sg.Button(text["btn_setup"]["text"], key = text["btn_setup"]["text"]),
+                    sg.Button("Reset", key = "_BTN_RESET_"),
+                    sg.Button("Setup", key = "_BTN_SETUP_"),
                 ],
             ],
         )
@@ -143,11 +125,9 @@ class GUI:
         window.Close()
 
     def save(self, values):
-        cfg["language"] = values["_COMBO_LANG_"]
         cfg["default_name"] = values["_INPUT_NAME_"]
         cfg["default_msg"] = values["_INPUT_MSG_"]
         configurator.save("settings.json", cfg)
-
 
 class Main:
     def __init__(self):
@@ -155,7 +135,7 @@ class Main:
         logger.info("Checking for Pushbullet and Streamlabs token")
 
         if cfg["pb_token"] == "" or cfg["sl_token"] == "":
-            sg.PopupOK("Opsætning", "Opsætning er krævet")
+            sg.PopupOK("Setup", "Setup is required")
             self.setup()
 
         logger.info("Pushbullet and Streamlabs tokens exist!")
