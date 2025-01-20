@@ -7,7 +7,7 @@ import websockets
 import requests
 
 logger = logging.getLogger("main")
-cfg = configurator.CFG().load("settings.json")
+cfg = configurator.load("settings.json")
 
 class Alerts():
     async def startReceiving(self):

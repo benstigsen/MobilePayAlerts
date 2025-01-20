@@ -7,9 +7,11 @@ import authentication
 import configurator
 
 logger = log.initialize()
-cfg = configurator.CFG().load("settings.json")
-lang = configurator.CFG().load("language.json")
-text = configurator.CFG().load("language.json")[cfg["language"].lower()]
+
+configurator.initialize()
+cfg = configurator.load("settings.json")
+lang = configurator.load("language.json")
+text = configurator.load("language.json")[cfg["language"].lower()]
 
 for key, value in lang["common"].items():
     text[key] = value
@@ -144,7 +146,7 @@ class GUI:
         cfg["language"] = values["_COMBO_LANG_"]
         cfg["default_name"] = values["_INPUT_NAME_"]
         cfg["default_msg"] = values["_INPUT_MSG_"]
-        configurator.CFG().save("settings.json", cfg)
+        configurator.save("settings.json", cfg)
 
 
 class Main:
@@ -167,6 +169,6 @@ class Main:
 
     def resetConfig(self):
         logger.info("Resetting config!")
-        configurator.CFG().reset("settings.json")
+        configurator.save("settings.json", configurator.default("settings.json"))
 
 Main()

@@ -9,7 +9,7 @@ from re import search as regex
 
 
 logger = logging.getLogger("main")
-cfg = configurator.CFG().load("settings.json")
+cfg = configurator.load("settings.json")
 
 # (Local server / Receive data) #
 class LocalServer(BaseHTTPRequestHandler):
@@ -112,7 +112,7 @@ class AuthHandler:
 
         if cfg["pb_token"] != "" and cfg["sl_token"] != "":
             logger.info("Saving tokens to settings.json")
-            configurator.CFG().save("settings.json", cfg)
+            configurator.save("settings.json", cfg)
 
             logger.info("Stopping server")
             raise StopServer()
