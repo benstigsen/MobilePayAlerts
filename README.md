@@ -1,16 +1,19 @@
-MobilePayAlerts
+# MobilePayAlerts
+Python application to show MobilePay donations on stream, using Streamlabs and Pushbullet.
 
-----
+## Installation
+MobilePayAlerts can be installed from itch.io here:  
+https://benstigsen.itch.io/mobilepayalerts
 
-**Requirements:**  
-- python 3.6+
-- PySimpleGUIQt (requires PyQt5)
-- websockets V6.0.0 (V7.0.0 doesn't work when receiving Pushbullet data)
-- webbrowser
-- requests
-- asyncio
-- logging
-- qrcode
-- json
+Follow the instructions in this YouTube video:  
+https://www.youtube.com/watch?v=mg-P0hnSPsg
 
-`pip install PySimpleGUIQt webbrowser asyncio logging qrcode json websockets==6.0.0`
+## Development
+- Download/clone the repository.
+- Install dependencies `pip install -r requirements.txt`
+- Run the application `python main.py`
+
+## Screenshots
+![First tab in MobilePayAlerts](./assets/1.png)
+
+![Second tab in MobilePayAlerts](./assets/2.png)
