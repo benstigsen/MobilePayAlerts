@@ -1,0 +1,13 @@
+certifi==2024.12.14
+charset-normalizer==3.4.1
+idna==3.10
+PySide6==6.8.1.1
+PySide6_Addons==6.8.1.1
+PySide6_Essentials==6.8.1.1
+PySimpleGUIQt==5.0.0
+requests==2.32.3
+shiboken6==6.8.1.1
+sv-ttk==2.6.0
+tk==0.1.0
+urllib3==2.3.0
+websockets==14.2
