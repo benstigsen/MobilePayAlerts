@@ -51,7 +51,6 @@ def button(name):
         case "_BTN_RESET_":
             logger.info("Resetting config!")
             configurator.save("settings.json", configurator.default())
-            widget_by_name(2, "_BTN_RESET_").invoke()
 
 def main():
     root.title("MobilePayAlerts")
