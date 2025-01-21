@@ -5,6 +5,7 @@ import asyncio
 import configurator
 import authentication
 import log
+import sv_ttk
 
 logger = log.initialize()
 
@@ -53,13 +54,19 @@ def button(name):
             widget_by_name(2, "_BTN_RESET_").invoke()
 
 def main():
-    # Setting some window properties
     root.title("MobilePayAlerts")
     root.configure(padx=6, pady=6)
-    root.minsize(200, 200)
-    root.maxsize(500, 500)
-    root.geometry("300x300+3200+400")
+    root.minsize(300, 400)
+    root.maxsize(300, 400)
 
+    # window coordinates (center)
+    sw = root.winfo_screenwidth()
+    sh = root.winfo_screenheight()
+    wx = (sw - root.winfo_reqwidth()) // 2
+    wy = (sh - root.winfo_reqheight()) // 2
+    root.geometry(f"300x400+{wx}+{wy}")
+
+    # gui
     tabs = ttk.Notebook(root, name="_MAIN_")
     tab1 = ttk.Frame(tabs, name="_TAB1_")
     tab2 = ttk.Frame(tabs, name="_TAB2_")
@@ -83,13 +90,11 @@ def main():
         ttk.Separator(tab1),
         ttk.Button(tab1, text="Test", name="_BTN_TEST_", command=callback("_BTN_TEST_")),
 
-        ttk.Separator(tab1),
-        ttk.Separator(tab1),
-        ttk.Label(tab1, text="MobilePayAlerts", font=font_label),
-        ttk.Label(tab1, text="Created by Benjamin Stigsen"),
+        ttk.Label(tab1, text="MobilePayAlerts", name="_LABEL_TITLE_", font=font_label),
+        ttk.Label(tab1, text="Created by Benjamin Stigsen", name="_LABEL_CREDITS_"),
 
         # Tab 2
-        ttk.Separator(tab1),
+        ttk.Separator(tab2),
         ttk.Label(tab2, text="Donation Settings", font=font_title),
 
         ttk.Separator(tab2),
@@ -102,10 +107,12 @@ def main():
 
         ttk.Separator(tab2),
         ttk.Button(tab2, text="Save Settings", name="_BTN_SAVE_", command=callback("_BTN_SAVE_")),
-        ttk.Separator(tab2),
 
+        ttk.Separator(tab2),
         ttk.Label(tab2, text="Other Settings", font=font_label),
+        ttk.Separator(tab2),
         ttk.Button(tab2, text="Reset", name="_BTN_RESET_", command=callback("_BTN_RESET_")),
+        ttk.Separator(tab2),
         ttk.Button(tab2, text="Setup", name="_BTN_SETUP_", command=callback("_BTN_SETUP_")),
     ]
 
@@ -113,11 +120,16 @@ def main():
     widget_by_name(2, "_INPUT_MSG_").insert(0, cfg["default_msg"])
 
     for widget in widgets:
+        if isinstance(widget, ttk.Label) and widget.winfo_name() in ["_LABEL_TITLE_", "_LABEL_CREDITS_"]:
+            padding = (100) if (widget.winfo_name() == "_LABEL_TITLE_") else (0)
+            widget.pack(side=tk.BOTTOM, pady=(0, padding))
+
         if isinstance(widget, ttk.Separator):
             widget.pack(pady=5)
         else:
             widget.pack()
 
+    sv_ttk.set_theme("dark")
     root.mainloop()
 
 if __name__ == "__main__":
