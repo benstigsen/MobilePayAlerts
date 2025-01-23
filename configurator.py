@@ -1,70 +1,38 @@
-import json, logging, sys
+import json
+import logging
 from os.path import isfile
 
-# CONFIGURATION
-class CFG():
-	def __init__(self):
-		if not isfile("settings.json"):
-			self.reset("settings.json")
+logger = logging.getLogger("main")
 
-		if not isfile("language.json"):
-			self.reset("language.json")
+def initialize():
+    if not isfile("settings.json"):
+        save("settings.json", default())
 
-	def save(self, cfg_file, settings):
-		settings = json.dumps(settings, indent=4)
+def save(cfg_file, settings):
+    settings = json.dumps(settings, indent=4)
 
-		log.info(f"Saving settings to {cfg_file}")
-		f = open(cfg_file, "w")
-		f.write(settings)
-		f.close()
+    logger.info(f"Saving settings to {cfg_file}")
+    with open(cfg_file, "w") as f:
+        f.write(settings)
 
-	def load(self, cfg_file):
-		log.info(f"Loading {cfg_file}")
+def load(cfg_file):
+    logger.info(f"Loading {cfg_file}")
 
-		with open(cfg_file) as f:
-			settings = json.load(f)
+    settings = {}
+    with open(cfg_file) as f:
+        settings = json.load(f)
 
-		return settings
+    return settings
 
-	def reset(self, cfg_file):
-		self.save(cfg_file, self.default(cfg_file))
+def default():
+    return {
+        "default_msg":  "",
+        "default_name": "Anon",
 
-	def default(self, cfg_file):
-		if cfg_file == "settings.json":
-			settings = {
-				"language": "danish",
+        "pb_token": "",
+        "sl_token": "",
 
-				"default_msg"	:"",
-				"default_name"	:"Anon",
-
-				"pb_token"		:"",
-				"sl_token"		:"",
-
-				"redirect_uri"		:"http://localhost:1337",
-				"redirect_uri_short":"localhost",
-				"port"				:1337
-			}
-
-		else:
-			log.debug("Unknown file")
-			settings = {}
-
-		return settings
-
-# LOGGER
-class LOG():
-	def get():
-		output_log = logging.getLogger("output")
-
-		if not output_log.handlers:
-			filelog = logging.FileHandler("output.log")
-			formatlog = logging.Formatter("[Line: %(lineno)d | File: %(filename)s | Func: %(funcName)s] [%(asctime)s] [%(levelname)s]: %(message)s")
-			filelog.setFormatter(formatlog)
-			output_log.addHandler(filelog)
-			output_log.setLevel(logging.INFO)
-
-		return output_log
-
-
-# Create variables for the entire scope
-log = LOG.get()
+        "redirect_uri":       "http://localhost:1337",
+        "redirect_uri_short": "localhost",
+        "port":               1337
+    }
