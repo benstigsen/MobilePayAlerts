@@ -1,6 +1,8 @@
 # MobilePayAlerts
 Python application to show MobilePay donations on stream, using Streamlabs and Pushbullet.
 
+Code review: https://youtu.be/xgDHSmae2Ks
+
 ## Installation
 MobilePayAlerts can be installed from itch.io here:  
 https://benstigsen.itch.io/mobilepayalerts
